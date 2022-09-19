@@ -1,4 +1,5 @@
 
-run do |env|
-  [200, {}, ["Hello World"]]
-end
+
+require_relative './lib/wcc/url_shortener'
+
+run WCC::UrlShortener.application
