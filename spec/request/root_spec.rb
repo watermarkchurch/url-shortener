@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -10,7 +11,6 @@ RSpec.describe do
   let(:app) { WCC::UrlShortener::Application.new }
 
   it 'gets root' do
-    
     get '/'
 
     expect(last_response.status).to eq(200)

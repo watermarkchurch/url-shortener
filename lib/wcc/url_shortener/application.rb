@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require_relative './request_context'
 
@@ -11,7 +12,7 @@ class WCC::UrlShortener::Application
 
   private
 
-  def run_request(request, context)
-    [200, {}, ['Hello World: ' + request.path]]
+  def run_request(request, _context)
+    [200, {}, ["Hello World: #{request.path}"]]
   end
 end
