@@ -2,10 +2,14 @@
 
 source "https://rubygems.org"
 
+gem "puma", "~> 5.6"
 gem "rack", "~> 3.0"
 
 group :development do
   gem "rackup", "~> 0.2.2"
 end
 
-gem "puma", "~> 5.6"
+group :test do
+  gem "rspec", "~> 3.11"
+  gem "rack-test", "~> 2.0"
+end
