@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'spec_helper'
 
@@ -22,7 +23,7 @@ RSpec.describe WCC::UrlShortener::Util do
     describe 'optional ?' do
       it 'matches both options' do
         result = WCC::UrlShortener::Util.path_to_regexp('https?:')
-        
+
         expect(result.to_s).to eq(/https?:/.to_s)
 
         expect(result.match('http:')).to_not be_nil
@@ -35,7 +36,7 @@ RSpec.describe WCC::UrlShortener::Util do
       it 'sets match group' do
         result = WCC::UrlShortener::Util.path_to_regexp('/blog/:slug/:digest')
 
-        expect(result.to_s).to eq(/\/blog\/(?<slug>[^\/\?]+)\/(?<digest>[^\/\?]+)/.to_s)
+        expect(result.to_s).to eq(/\/blog\/(?<slug>[^\/?]+)\/(?<digest>[^\/?]+)/.to_s)
 
         match = result.match('/blog/something-something-123/abcd1234.xyz')
         expect(match).to_not be_nil

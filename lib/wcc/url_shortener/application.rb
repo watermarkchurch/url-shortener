@@ -16,23 +16,24 @@ class WCC::UrlShortener::Application
   end
 
   def middleware
-    @middleware ||= MiddlewareStack.new([
-      Rack::Deflater,
-      Rack::Head,
-      Rack::ConditionalGet,
-      Rack::ETag,
-      [WCC::UrlShortener::RedirectRouter, redirects]
-    ])
+    @middleware ||= MiddlewareStack.new(
+      [
+        Rack::Deflater,
+        Rack::Head,
+        Rack::ConditionalGet,
+        Rack::ETag,
+        [WCC::UrlShortener::RedirectRouter, redirects],
+      ],
+    )
   end
-
 
   attr_reader :redirects
 
   def initialize
-    @redirects = load_redirects!
+    load_redirects!
   end
 
-  def prepare!
+  def prepare! # rubocop:disable Metrics/AbcSize
     raise StandardError, 'Cannot prepare twice!' if prepared?
 
     # Load all middleware
@@ -63,32 +64,34 @@ class WCC::UrlShortener::Application
   private
 
   def load_redirects!
-    @redirects ||= File.readlines(root.join('config/redirects'))
+    @redirects ||= File.readlines(root.join('config/redirects')) # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   class MiddlewareStack < SimpleDelegator
     def use(*args)
-      self.push(args)
+      push(args)
     end
 
     def insert_before(middleware_class, *args)
-      idx = self.find_index do |m|
-        klass, = Array(m)
-        middleware_class == klass
-      end
+      idx =
+        find_index do |m|
+          klass, = Array(m)
+          middleware_class == klass
+        end
       raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
 
-      self.insert(idx, args)
+      insert(idx, args)
     end
 
     def insert_after(middleware_class, *args)
-      idx = self.find_index do |m|
-        klass, = Array(m)
-        middleware_class == klass
-      end
+      idx =
+        find_index do |m|
+          klass, = Array(m)
+          middleware_class == klass
+        end
       raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
 
-      self.insert(idx + 1, args)
+      insert(idx + 1, args)
     end
   end
 end
