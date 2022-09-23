@@ -1,2 +1,22 @@
+https?://www.wmfw.org/* https://www.watermarkfortworth.org 302 preserve
+https?://www.watermarkfw.org/* https://www.watermarkfortworth.org 302 preserve
+
+https?://redirect.churchleadersconference.com/* https://www.watermarkresources.com/conferences/clc?utm_source=churchleadersconference.com 302
+
+https?://marriagehelp.org/* https://www.reengage.org/legacy 301 preserve
+https?://www.marriagehelp.org/* https://www.reengage.org/legacy 301 preserve
+
+https?://legacy.watermark.org/* https://www.watermark.org 301 preserve
+https?://staging-new.watermark.org/* https://staging.watermark.org 301 preserve
+
+https?://papyrus.watermark.org/* https://www.watermark.org 301 preserve
+
+https?://live.theporchdallas.com/* https://www.theporch.live/live-stream 301
+https?://*.theporch.live/* https://www.theporch.live 301 preserve
+https?://*.theporchdallas.com/* https://www.theporch.live/legacy 301 preserve
+
+https?://*.clc2023.com/* https://www.watermarkresources.com/conferences/clc?utm_source=clc2023.com 301 preserve
+https?://*.thechurchleadershipconference.com/* https://www.watermarkresources.com/conferences/clc?utm_source=thechurchleadershipconference.com 301 preserve
+
 /search https://www.watermark.org/search 301
 /search/:query https://www.watermark.org/search?q=:query 301
