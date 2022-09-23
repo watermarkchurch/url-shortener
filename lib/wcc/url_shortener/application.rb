@@ -7,6 +7,8 @@ require 'rack/conditional_get'
 require 'rack/etag'
 require 'rack/deflater'
 
+require_relative './redirect_router'
+
 class WCC::UrlShortener::Application
   def root
     # Project root - allows accessing config dir
@@ -17,7 +19,13 @@ class WCC::UrlShortener::Application
     @app
   end
 
+  def routes
+    @routes ||= Router.new
+  end
+
   def initialize
+    redirects = load_redirects!
+
     @app =
       Rack::Builder.new do
         # Defaults
@@ -25,7 +33,10 @@ class WCC::UrlShortener::Application
         use Rack::Head
         use Rack::ConditionalGet
         use Rack::ETag
-        use Rack::Static, urls: [''], root: 'public', index: 'index.html'
+
+        use WCC::UrlShortener::RedirectRouter, redirects
+
+        use Rack::Static, cascade: true, urls: [''], root: 'public', index: 'index.html'
 
         run ->(env) { [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]] }
       end
@@ -35,6 +46,7 @@ class WCC::UrlShortener::Application
     raise StandardError, 'Cannot prepare twice!' if prepared?
 
     Dir[root.join('config/initializers/*.rb')].each { |f| require f }
+    load_redirects!
 
     @prepared = true
   end
@@ -47,5 +59,11 @@ class WCC::UrlShortener::Application
     prepare! unless prepared?
 
     @app
+  end
+
+  private
+
+  def load_redirects!
+    @redirects ||= File.readlines(root.join('config/redirects'))
   end
 end
