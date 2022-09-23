@@ -5,7 +5,7 @@ require 'spec_helper'
 require 'wcc/url_shortener'
 require 'wcc/url_shortener/application'
 
-RSpec.describe do
+RSpec.describe('config/redirects') do
   include Rack::Test::Methods
 
   let(:app) { WCC::UrlShortener::Application.new.to_app }

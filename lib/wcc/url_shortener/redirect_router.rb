@@ -25,7 +25,7 @@ class WCC::UrlShortener::RedirectRouter
   def parse_redirects(redirects)
     redirects.map do |r|
       from, to, status, preserve = r.split(/\s+/)
-      next unless /\S/ =~ from
+      next unless /\S/ =~ from && /^\s*\#/ !~ from
 
       Route.new(
         WCC::UrlShortener::Util.path_to_regexp(from),

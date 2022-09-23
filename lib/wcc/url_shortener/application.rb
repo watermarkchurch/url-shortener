@@ -16,43 +16,42 @@ class WCC::UrlShortener::Application
   end
 
   def middleware
-    @app
+    @middleware ||= MiddlewareStack.new([
+      Rack::Deflater,
+      Rack::Head,
+      Rack::ConditionalGet,
+      Rack::ETag,
+      [WCC::UrlShortener::RedirectRouter, redirects]
+    ])
   end
 
-  def routes
-    @routes ||= Router.new
-  end
+
+  attr_reader :redirects
 
   def initialize
-    redirects = load_redirects!
-
-    @app =
-      Rack::Builder.new do
-        # Defaults
-        use Rack::Deflater
-        use Rack::Head
-        use Rack::ConditionalGet
-        use Rack::ETag
-
-        use WCC::UrlShortener::RedirectRouter, redirects
-
-        use Rack::Static, cascade: true, urls: [''], root: 'public', index: 'index.html'
-
-        run ->(env) { [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]] }
-      end
+    @redirects = load_redirects!
   end
 
   def prepare!
     raise StandardError, 'Cannot prepare twice!' if prepared?
 
+    # Load all middleware
     Dir[root.join('config/initializers/*.rb')].each { |f| require f }
-    load_redirects!
 
-    @prepared = true
+    @app = Rack::Builder.new
+    middleware.each do |m|
+      @app.use(*Array(m))
+    end
+
+    @app.use Rack::Static, cascade: true, urls: [''], root: 'public', index: 'index.html'
+
+    @app.run ->(env) { [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]] }
+
+    @app
   end
 
   def prepared?
-    @prepared == true
+    @app != nil
   end
 
   def to_app
@@ -65,5 +64,31 @@ class WCC::UrlShortener::Application
 
   def load_redirects!
     @redirects ||= File.readlines(root.join('config/redirects'))
+  end
+
+  class MiddlewareStack < SimpleDelegator
+    def use(*args)
+      self.push(args)
+    end
+
+    def insert_before(middleware_class, *args)
+      idx = self.find_index do |m|
+        klass, = Array(m)
+        middleware_class == klass
+      end
+      raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
+
+      self.insert(idx, args)
+    end
+
+    def insert_after(middleware_class, *args)
+      idx = self.find_index do |m|
+        klass, = Array(m)
+        middleware_class == klass
+      end
+      raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
+
+      self.insert(idx + 1, args)
+    end
   end
 end
