@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'puma', '~> 5.6'
 gem 'rack', '~> 3.0'
+gem 'bugsnag', '~> 6.24'
 
 group :development do
   gem 'guard', '~> 2.18'
