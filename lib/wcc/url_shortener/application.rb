@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'delegate'
 require 'rack/builder'
 require 'rack/static'
 require 'rack/common_logger'
@@ -23,6 +24,7 @@ class WCC::UrlShortener::Application
         Rack::ConditionalGet,
         Rack::ETag,
         [WCC::UrlShortener::RedirectRouter, redirects],
+        [Rack::Static, { cascade: true, urls: [''], root: 'public', index: 'index.html' }],
       ],
     )
   end
@@ -33,7 +35,7 @@ class WCC::UrlShortener::Application
     load_redirects!
   end
 
-  def prepare! # rubocop:disable Metrics/AbcSize
+  def prepare!
     raise StandardError, 'Cannot prepare twice!' if prepared?
 
     # Load all middleware
@@ -43,8 +45,6 @@ class WCC::UrlShortener::Application
     middleware.each do |m|
       @app.use(*Array(m))
     end
-
-    @app.use Rack::Static, cascade: true, urls: [''], root: 'public', index: 'index.html'
 
     @app.run ->(env) { [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]] }
 
@@ -58,7 +58,7 @@ class WCC::UrlShortener::Application
   def to_app
     prepare! unless prepared?
 
-    @app
+    @app.to_app
   end
 
   private

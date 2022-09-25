@@ -31,7 +31,7 @@ class WCC::UrlShortener::RedirectRouter
       Route.new(
         WCC::UrlShortener::Util.path_to_regexp(from),
         to,
-        status || 301
+        status || 301,
       )
     end
   end
@@ -42,7 +42,7 @@ class WCC::UrlShortener::RedirectRouter
         from =~ request.url
       end
 
-      def call(request) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+      def call(request) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         match = from.match(request.url)
 
         # Replace any :splat or :var in to line
