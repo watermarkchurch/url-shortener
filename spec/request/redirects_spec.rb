@@ -11,6 +11,7 @@ RSpec.describe('config/redirects') do
   let(:app) { WCC::UrlShortener::Application.new.to_app }
 
   {
+    'https://www.wmfw.org' => ['https://www.watermarkfortworth.org', 302],
     'https://www.wmfw.org/test' => ['https://www.watermarkfortworth.org/test', 302],
     'http://www.watermarkfw.org/abc/123.jpg' => ['https://www.watermarkfortworth.org/abc/123.jpg', 302],
 

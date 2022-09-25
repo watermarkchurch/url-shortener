@@ -25,20 +25,19 @@ class WCC::UrlShortener::RedirectRouter
 
   def parse_redirects(redirects)
     redirects.map do |r|
-      from, to, status, preserve = r.split(/\s+/)
+      from, to, status = r.split(/\s+/)
       next unless /\S/ =~ from && /^\s*\#/ !~ from
 
       Route.new(
         WCC::UrlShortener::Util.path_to_regexp(from),
         to,
-        status || 301,
-        preserve&.downcase == 'preserve',
+        status || 301
       )
     end
   end
 
   Route =
-    Struct.new(:from, :to, :status, :preserve) do
+    Struct.new(:from, :to, :status) do
       def match?(request)
         from =~ request.url
       end
@@ -53,6 +52,9 @@ class WCC::UrlShortener::RedirectRouter
           end
         location = URI(location)
 
+        # trim final slash
+        location.path = location.path.sub(/\/$/, '')
+
         # merge in queries from "to"
         request_query = Rack::Utils.parse_query(request.query_string)
         to_query = Rack::Utils.parse_query(location.query) if location.query
@@ -63,11 +65,6 @@ class WCC::UrlShortener::RedirectRouter
             request_query
           end
         location.query = Rack::Utils.build_query(final_query) if final_query && final_query.count > 0
-
-        if preserve && (request.path && request.path != '/')
-          # Append incoming path to the TO path
-          location.path = location.path.sub(/\/$/, '') + request.path
-        end
 
         [status, { 'Location' => location.to_s }, []]
       end
