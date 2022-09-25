@@ -36,7 +36,7 @@ RSpec.describe('config/redirects') do
     'https://theporchdallas.com/feed/' => 'https://www.theporch.live/legacy/feed/',
 
     # We should merge the utm_source from the rule line with the incoming request params
-    'https://clc2023.com?test=1' => 'https://www.watermarkresources.com/conferences/clc/blog?test=1&utm_source=clc2023.com',
+    'https://clc2023.com?test=1' => 'https://www.watermarkresources.com/conferences/clc?test=1&utm_source=clc2023.com',
     'https://thechurchleadershipconference.com' => 'https://www.watermarkresources.com/conferences/clc?utm_source=thechurchleadershipconference.com',
     'https://redirect.churchleadersconference.com/blargh?test=1' => [
       'https://www.watermarkresources.com/conferences/clc?test=1&utm_source=churchleadersconference.com', 302
