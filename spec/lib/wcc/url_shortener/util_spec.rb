@@ -11,7 +11,7 @@ RSpec.describe WCC::UrlShortener::Util do
       it 'converts to match anything' do
         result = WCC::UrlShortener::Util.path_to_regexp('/a/*')
 
-        expect(result.to_s).to eq(/\/a\/(?<splat>[^?]*)/.to_s)
+        expect(result.to_s).to eq('(?-mix:\\/a\\/(?<splat>[^\\?]*))')
 
         expect(result.match('/a/123/456')).to_not be_nil
         expect(result.match('/b/123/456')).to be_nil
@@ -43,7 +43,7 @@ RSpec.describe WCC::UrlShortener::Util do
       it 'sets match group' do
         result = WCC::UrlShortener::Util.path_to_regexp('/blog/:slug/:digest')
 
-        expect(result.to_s).to eq(/\/blog\/(?<slug>[^\/?]+)\/(?<digest>[^\/?]+)/.to_s)
+        expect(result.to_s).to eq('(?-mix:\\/blog\\/(?<slug>[^\\/\\?]+)\\/(?<digest>[^\\/\\?]+))')
 
         match = result.match('/blog/something-something-123/abcd1234.xyz')
         expect(match).to_not be_nil
