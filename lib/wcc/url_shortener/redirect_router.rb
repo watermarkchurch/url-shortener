@@ -9,7 +9,11 @@ class WCC::UrlShortener::RedirectRouter
   end
 
   def call(env)
-    request = Rack::Request.new(env)
+    request = Rack::Request.new(env.dup)
+    # An incoming request for `https://#{host}` is equivalent to `https://#{host}/`.
+    # Stripping that out helps when the splat is appended to a subpath like /legacy/:splat
+    request.path_info = '' if request.path_info == '/'
+
     if route = lookup(request)
       return route.call(request)
     end
@@ -45,15 +49,12 @@ class WCC::UrlShortener::RedirectRouter
       def call(request) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         match = from.match(request.url)
 
-        # Replace any :splat or :var in to line
+        # Replace any :splat or :var in the to line
         location =
           match.named_captures.reduce(to) do |str, (name, value)|
-            str.gsub(":#{name}", value)
+            str.gsub(/\/?:#{name}/, value)
           end
         location = URI(location)
-
-        # trim final slash
-        location.path = location.path.sub(/\/$/, '')
 
         # merge in queries from "to"
         request_query = Rack::Utils.parse_query(request.query_string)

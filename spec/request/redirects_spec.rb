@@ -15,10 +15,6 @@ RSpec.describe('config/redirects') do
     'https://www.wmfw.org/test' => ['https://www.watermarkfortworth.org/test', 302],
     'http://www.watermarkfw.org/abc/123.jpg' => ['https://www.watermarkfortworth.org/abc/123.jpg', 302],
 
-    'https://redirect.churchleadersconference.com/blargh?test=1' => [
-      'https://www.watermarkresources.com/conferences/clc?test=1&utm_source=churchleadersconference.com', 302
-    ],
-
     'https://marriagehelp.org/test/abc/123.jpg' => 'https://www.reengage.org/legacy/test/abc/123.jpg',
     'https://www.marriagehelp.org' => 'https://www.reengage.org/legacy',
 
@@ -31,8 +27,20 @@ RSpec.describe('config/redirects') do
     'https://old.theporch.live/blog' => 'https://www.theporch.live/blog',
     'https://theporchdallas.com/blog' => 'https://www.theporch.live/legacy/blog',
 
-    'https://clc2023.com/blog?test=1' => 'https://www.watermarkresources.com/conferences/clc/blog?test=1&utm_source=clc2023.com',
+    # At the root path, `https://#{hostname}/` is equivalent to `https://#{hostname}`, so we don't need to
+    # preserve the trailing slash.
+    'https://theporchdallas.com' => 'https://www.theporch.live/legacy',
+    'https://theporchdallas.com/' => 'https://www.theporch.live/legacy',
+    # However, at a non-root path, a trailing / indicates the index file for that directory.
+    # i.e. `/feed/` is not equivalent to `/feed`, thus we should preserve the trailing slash
+    'https://theporchdallas.com/feed/' => 'https://www.theporch.live/legacy/feed/',
+
+    # We should merge the utm_source from the rule line with the incoming request params
+    'https://clc2023.com?test=1' => 'https://www.watermarkresources.com/conferences/clc/blog?test=1&utm_source=clc2023.com',
     'https://thechurchleadershipconference.com' => 'https://www.watermarkresources.com/conferences/clc?utm_source=thechurchleadershipconference.com',
+    'https://redirect.churchleadersconference.com/blargh?test=1' => [
+      'https://www.watermarkresources.com/conferences/clc?test=1&utm_source=churchleadersconference.com', 302
+    ],
   }.each do |from, to|
     url, status = Array(to)
 

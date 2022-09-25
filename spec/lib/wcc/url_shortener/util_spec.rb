@@ -11,19 +11,19 @@ RSpec.describe WCC::UrlShortener::Util do
       it 'converts to match anything' do
         result = WCC::UrlShortener::Util.path_to_regexp('/a/*')
 
-        expect(result.to_s).to eq('(?-mix:\\/a\\/(?<splat>[^\\?]*))')
-
         expect(result.match('/a/123/456')).to_not be_nil
         expect(result.match('/b/123/456')).to be_nil
 
-        expect(result.match('/a/123/456.jpg')['splat']).to eq('123/456.jpg')
+        expect(result.match('/a/123/456.jpg')['splat']).to eq('/123/456.jpg')
+
+        expect(result.to_s).to eq('(?-mix:\\/a(?<splat>[^\\?]*))')
       end
 
       it 'stops at query string' do
         result = WCC::UrlShortener::Util.path_to_regexp('/a/*')
 
         expect(result.match('/a/123/456.jpg?utm_source=test')).to_not be_nil
-        expect(result.match('/a/123/456.jpg?utm_source=test')['splat']).to eq('123/456.jpg')
+        expect(result.match('/a/123/456.jpg?utm_source=test')['splat']).to eq('/123/456.jpg')
       end
     end
 
