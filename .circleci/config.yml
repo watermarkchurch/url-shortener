@@ -1,0 +1,58 @@
+version: 2.1
+
+orbs:
+  codecov: codecov/codecov@3.2.0
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build_and_test
+
+aliases:
+  - &test_environment
+      docker:
+        # specify the version you desire here
+        - image: cimg/ruby:3.1.2
+
+      working_directory: ~/repo
+
+jobs:
+  build_and_test:
+    <<: *test_environment
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v0-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --jobs=4 --retry=3
+      - save_cache:
+          paths:
+            - ~/vendor/bundle
+          key: v0-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format documentation \
+                            --order rand \
+                            $TEST_FILES
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+
+      - codecov/upload:
+          file: coverage/coverage.xml
+          flags: ruby
+
+      - run: bundle exec rubocop

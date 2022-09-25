@@ -19,4 +19,7 @@ end
 group :test do
   gem 'rack-test', '~> 2.0'
   gem 'rspec', '~> 3.11'
+  gem 'rspec_junit_formatter', '~> 0.5.1'
+  gem 'simplecov', '~> 0.21.2'
+  gem 'simplecov-cobertura', '~> 2.1'
 end
