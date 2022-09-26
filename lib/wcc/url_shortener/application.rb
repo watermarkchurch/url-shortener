@@ -46,7 +46,7 @@ class WCC::UrlShortener::Application
       @app.use(*Array(m))
     end
 
-    @app.run ->(env) { [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]] }
+    @app.run self
 
     @app
   end
@@ -59,6 +59,10 @@ class WCC::UrlShortener::Application
     prepare! unless prepared?
 
     @app.to_app
+  end
+
+  def call(env)
+    [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]]
   end
 
   private
