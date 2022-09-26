@@ -1,4 +1,6 @@
 # Watermark URL shortener
 
-This is the simplest possible URL shortener.  It uses [Netlify Redirects](https://docs.netlify.com/routing/redirects/)
-to accomplish the URL shortening.  Adding a new redirect is as simple as adding a new line to the [`_redirects` file](./public/_redirects) and committing the change.
+This is a simple URL shortener based on Rack.  It reads the file in `config/redirects`
+and converts it into a set of regexes that are matched against incoming requests.
+It then redirects to the appropriate destination based on the template.
+
