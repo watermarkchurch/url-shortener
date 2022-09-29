@@ -23,16 +23,9 @@ class WCC::UrlShortener::Application
         Rack::Head,
         Rack::ConditionalGet,
         Rack::ETag,
-        [WCC::UrlShortener::RedirectRouter, redirects],
         [Rack::Static, { cascade: true, urls: [''], root: 'public', index: 'index.html' }],
       ],
     )
-  end
-
-  attr_reader :redirects
-
-  def initialize
-    load_redirects!
   end
 
   def prepare!
@@ -66,10 +59,6 @@ class WCC::UrlShortener::Application
   end
 
   private
-
-  def load_redirects!
-    @redirects ||= File.readlines(root.join('config/redirects')) # rubocop:disable Naming/MemoizedInstanceVariableName
-  end
 
   class MiddlewareStack < SimpleDelegator
     def use(*args)

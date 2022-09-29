@@ -8,7 +8,7 @@ require 'wcc/url_shortener/application'
 RSpec.describe do
   include Rack::Test::Methods
 
-  let(:app) { WCC::UrlShortener::Application.new.to_app }
+  let(:app) { WCC::UrlShortener.application.to_app }
 
   it 'gets root' do
     get '/'
