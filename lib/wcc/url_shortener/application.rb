@@ -8,7 +8,8 @@ require 'rack/conditional_get'
 require 'rack/etag'
 require 'rack/deflater'
 
-require_relative './redirect_router'
+require_relative './util'
+require_relative './middleware'
 
 class WCC::UrlShortener::Application
   def root
@@ -57,8 +58,6 @@ class WCC::UrlShortener::Application
   def call(env)
     [404, {}, ["Not Found: #{Rack::Request.new(env).path}"]]
   end
-
-  private
 
   class MiddlewareStack < SimpleDelegator
     def use(*args)

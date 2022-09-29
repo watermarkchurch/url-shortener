@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './util'
-
-class WCC::UrlShortener::RedirectRouter
+class WCC::UrlShortener::Middleware::RedirectRouter
   def initialize(app, redirects)
     @app = app
     @redirects = parse_redirects(redirects).compact
