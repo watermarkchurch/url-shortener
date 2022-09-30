@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class WCC::UrlShortener::Middleware::TestHost
-
   def initialize(app)
     @app = app
   end

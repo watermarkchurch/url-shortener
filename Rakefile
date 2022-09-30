@@ -17,7 +17,7 @@ task :middleware do
 end
 
 desc 'Verifies that the new redirector sends the same Location header as the old one'
-task :verify, [:url, :file] do |t, args|
+task :verify, [:url, :file] do |_t, args|
   require 'uri'
   require 'typhoeus'
 
@@ -28,9 +28,9 @@ task :verify, [:url, :file] do |t, args|
 
   FileUtils.mkdir_p('./tmp')
   results_file = File.expand_path('./tmp/results.txt')
-  File.open(results_file, "w+") do |f|
+  File.open(results_file, 'w+') do |f|
     File.readlines(file).each do |line|
-      from, to, status = line.split(/\s/)
+      from, _to, _status = line.split(/\s/)
       next unless from && /\S/ =~ from
 
       from_uri = URI(from)
@@ -49,6 +49,6 @@ task :verify, [:url, :file] do |t, args|
     hydra.run
   end
 
-    system("sort -uo #{results_file} #{results_file}", exception: true)
-    system("git difftool --no-index -- #{file} #{results_file}", exception: true)
+  system("sort -uo #{results_file} #{results_file}", exception: true)
+  system("git difftool --no-index -- #{file} #{results_file}", exception: true)
 end

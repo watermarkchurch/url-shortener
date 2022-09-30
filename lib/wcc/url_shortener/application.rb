@@ -77,6 +77,7 @@ class WCC::UrlShortener::Application
     end
 
     private
+
     def find_target_index(target)
       return target if target.is_a?(Integer)
 

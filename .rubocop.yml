@@ -41,6 +41,7 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
     # ignore rake tasks
     - '**/*.rake'
+    - 'Rakefile'
 
 Metrics/ModuleLength:
   Exclude:
