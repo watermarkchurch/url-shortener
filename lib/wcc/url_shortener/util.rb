@@ -7,6 +7,6 @@ module WCC::UrlShortener::Util
     path = path.gsub(/\/?\*/, '(?<splat>[^\?]*)')
       .gsub(/:(\w+)/, '(?<\1>[^\/\?]+)')
 
-    Regexp.new(path)
+    Regexp.new("^#{path}(?:\\?.*)?$")
   end
 end

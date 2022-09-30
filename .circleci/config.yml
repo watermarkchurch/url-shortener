@@ -31,6 +31,11 @@ jobs:
             - ~/vendor/bundle
           key: v0-ruby-dependencies-{{ checksum "Gemfile.lock" }}
 
+      - run:
+          name: Check if any specs have "focus"
+          command: |
+            [[ -z "$(find . -type f -name \*_spec.rb | xargs grep -e ':focus' -e 'focus: true')" ]]
+
       # run tests!
       - run:
           name: run tests

@@ -15,7 +15,7 @@ https?://live.theporchdallas.com/* https://www.theporch.live/live-stream 301
 https?://*theporch.live/* https://www.theporch.live/:splat 301
 https?://*theporchdallas.com/* https://www.theporch.live/legacy/:splat 301
 
-https?://*clc2023.com/* https://www.watermarkresources.com/conferences/clc/:splat?utm_source=clc2023.com 301
-https?://*thechurchleadershipconference.com/* https://www.watermarkresources.com/conferences/clc/:splat?utm_source=thechurchleadershipconference.com 301
+https?://*clc2023.com https://www.watermarkresources.com/conferences/clc?utm_source=clc2023.com 301
+https?://*thechurchleadershipconference.com https://www.watermarkresources.com/conferences/clc?utm_source=thechurchleadershipconference.com 301
 
 https?://www.watermarkfrisco.org/* https://www.onwardcc.org/:splat 301

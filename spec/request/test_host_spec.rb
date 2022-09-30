@@ -8,7 +8,7 @@ RSpec.describe('config/initializers/redirect_router') do
 
   let(:app) { WCC::UrlShortener.application.to_app }
 
-  it 'overrides hostname based on X-Test-Host header', focus: true do
+  it 'overrides hostname based on X-Test-Host header' do
     
     header 'X-Test-Host', 'theporchdallas.com'
 
