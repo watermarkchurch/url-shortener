@@ -64,26 +64,30 @@ class WCC::UrlShortener::Application
       push(args)
     end
 
-    def insert_before(middleware_class, *args)
-      idx =
-        find_index do |m|
-          klass, = Array(m)
-          middleware_class == klass
-        end
-      raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
+    def insert_before(target, *args)
+      idx = find_target_index(target)
 
       insert(idx, args)
     end
 
-    def insert_after(middleware_class, *args)
+    def insert_after(target, *args)
+      idx = find_target_index(target)
+
+      insert(idx + 1, args)
+    end
+
+    private
+    def find_target_index(target)
+      return target if target.is_a?(Integer)
+
       idx =
         find_index do |m|
           klass, = Array(m)
-          middleware_class == klass
+          target == klass
         end
-      raise ArgumentError, "Could not find #{middleware_class} in middleware stack" unless idx && idx >= 0
+      raise ArgumentError, "Could not find #{target} in middleware stack" unless idx && idx >= 0
 
-      insert(idx + 1, args)
+      idx
     end
   end
 end

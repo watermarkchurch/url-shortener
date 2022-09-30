@@ -7,5 +7,5 @@ Bugsnag.configure do |config|
   config.project_root = WCC::UrlShortener.application.root.to_s
 end
 
-WCC::UrlShortener.application.middleware.insert_before Rack::Static,
+WCC::UrlShortener.application.middleware.insert_before 0,
   Bugsnag::Rack
