@@ -14,6 +14,7 @@ group :development do
   gem 'rake'
   gem 'rubocop', '~> 1.36'
   gem 'rubocop-performance', '~> 1.15'
+  gem 'typhoeus'
 end
 
 group :test do

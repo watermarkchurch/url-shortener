@@ -8,6 +8,8 @@ GEM
     concurrent-ruby (1.1.10)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    ethon (0.15.0)
+      ffi (>= 1.15.0)
     ffi (1.15.5)
     formatador (1.1.0)
     guard (2.18.0)
@@ -101,6 +103,8 @@ GEM
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
     thor (1.2.1)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
     unicode-display_width (2.3.0)
     webrick (1.7.0)
 
@@ -125,6 +129,7 @@ DEPENDENCIES
   rubocop-performance (~> 1.15)
   simplecov (~> 0.21.2)
   simplecov-cobertura (~> 2.1)
+  typhoeus
 
 BUNDLED WITH
    2.3.13
