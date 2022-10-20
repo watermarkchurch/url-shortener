@@ -15,6 +15,22 @@ redirects file instead.
 Simply add the new line to the [`config/redirects`](./config/redirects) file, commit the change to the master
 branch, and push.  Once CircleCI passes, the code will automatically be deployed to production by Heroku.
 
+### Rule syntax
+
+Rules are processed in order from the top to the bottom of the redirects file.  The first matching rule wins.  Rules are separated into three columns by whitespace: `from`, `to`, and `status`.
+
+"From" rules are converted into Regexp by the `path_to_regexp` function, so any Ruby regular expression syntax will
+match.  For example, you can use `https?://` to match a `http://` OR `https://` domain.
+
+Before converting to a regular expression, named path parameters are converted to Regexp capturing groups.
+Any capturing group is available as a replacement value in the "to" template.
+So you can do for example `https://blog.watermark.org/:slug https://www.watermark.org/blog/:slug` and it will redirect
+`https://blog.watermark.org/how-to-be-a-godly-man` to `https://www.watermark.org/blog/how-to-be-a-godly-man`.
+
+Finally, the special character `*` is converted into the special `:splat` capturing group.  Whereas named path params
+will only match one path part (i.e. will stop at the next `/`), splat will match all remaining path parts up to the 
+beginning of the query params.
+
 ## Testing code changes
 
 The heroku pipeline has review apps enabled, so any branch will automatically have
