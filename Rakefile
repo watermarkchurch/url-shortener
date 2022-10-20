@@ -21,7 +21,7 @@ task :verify, [:url, :file] do |_t, args|
   require 'uri'
   require 'typhoeus'
 
-  url = URI(args[:url] || 'http://localhost:3000')
+  url = URI(args[:url]) if args[:url]
   file = args[:file] || './spec/fixtures/redirects.txt'
 
   hydra = Typhoeus::Hydra.new(max_concurrency: 2)
@@ -34,13 +34,18 @@ task :verify, [:url, :file] do |_t, args|
       next unless from && /\S/ =~ from
 
       from_uri = URI(from)
-      host = from_uri.hostname
-      from_uri.hostname = url.hostname
-      from_uri.scheme = url.scheme
-      from_uri.port = url.port
+      headers = {}
+      if url
+        host = from_uri.hostname
+        from_uri.hostname = url.hostname
+        from_uri.scheme = url.scheme
+        from_uri.port = url.port
+        headers['X-TEST-HOST'] = host
+      end
 
-      request = Typhoeus::Request.new(from_uri, headers: { 'X-TEST-HOST' => host })
+      request = Typhoeus::Request.new(from_uri, headers:)
       request.on_complete do |response|
+        warn "GET #{headers} #{from_uri} => #{response.headers['Location']} #{response.code}"
         f.puts "#{from} #{response.headers['Location']} #{response.code}"
       end
       hydra.queue(request)
