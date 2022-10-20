@@ -9,3 +9,9 @@ end
 
 WCC::UrlShortener.application.middleware.insert_before 0,
   Bugsnag::Rack
+
+at_exit do
+  if $!
+    Bugsnag.notify($!)
+  end
+end
