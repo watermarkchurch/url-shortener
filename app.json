@@ -1,0 +1,39 @@
+{
+  "name": "Watermark URL shortener",
+  "description": "This app redirects incoming requests based on rules specified in config/redirects",
+  "website": "https://www.watermark.org",
+  "repository": "https://github.com/watermarkchurch/url-shortener",
+  "env": {
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "2"
+    },
+    "RAILS_MAX_THREADS": {
+      "description": "The number of threads per process.",
+      "value": "5"
+    },
+    "RAILS_ENV": {
+      "value": "production"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
+  "addons": [
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "bundle exec rake test"
+      }
+    }
+  }
+}

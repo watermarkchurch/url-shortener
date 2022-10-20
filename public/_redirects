@@ -1,2 +1,0 @@
-/search https://www.watermark.org/search 301
-/search/:query https://www.watermark.org/search?q=:query 301
