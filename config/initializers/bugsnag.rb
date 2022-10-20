@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require 'bugsnag'
 
 Bugsnag.configure do |config|
@@ -11,7 +12,5 @@ WCC::UrlShortener.application.middleware.insert_before 0,
   Bugsnag::Rack
 
 at_exit do
-  if $!
-    Bugsnag.notify($!)
-  end
+  Bugsnag.notify($ERROR_INFO) if $ERROR_INFO
 end
