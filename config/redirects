@@ -1,6 +1,8 @@
 https?://www.wmfw.org/* https://www.watermarkfortworth.org/:splat 302
 https?://www.watermarkfw.org/* https://www.watermarkfortworth.org/:splat 302
 
+# CLC in-app links don't always pass URL validation in various websites, use a redirect to work around this.
+https?://redirect.churchleadersconference.com/clc-app-link/* clc://clc/app-link/:splat 302
 https?://redirect.churchleadersconference.com/* https://www.watermarkresources.com/conferences/clc?utm_source=churchleadersconference.com 302
 
 https?://marriagehelp.org/* https://www.reengage.org/legacy/:splat 301
