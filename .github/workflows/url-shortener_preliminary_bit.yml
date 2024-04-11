@@ -1,0 +1,51 @@
+name: 'url-shortener preliminary bit'
+run-name: 'Run preliminary bit for url-shortener'
+on: deployment_status
+
+jobs:
+  check-deployment:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        
+      - name: Set commit status as pending
+        if: "${{ inputs.github_token != '' && inputs.sha != '' }}"
+        uses: myrotvorets/set-commit-status-action@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: pending
+          sha: ${{ github.event.deployment.sha }}
+          context: ${{ github.event.deployment_status.environment_url }}
+          description: Checking Deployment to ${{ github.event.deployment_status.environment_url }}
+
+      - name: Run Preliminary Bit Action
+        shell: bash
+        run: |
+          sleep 30
+
+          check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
+          if [[ "$check" != "200" ]]; then
+            # Might just be taking a minute to get ready, even after it sends the webhook that the deployment completed.  Wait 30 secs before running the test.
+            echo "$check $url - sleep 30 seconds before trying again"
+            sleep 30
+            check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
+          fi
+
+          if [[ "$check" != "200" ]]; then
+            echo "Preliminary bit failed: root URL had a $check error";
+            exit -1;
+          else
+            echo "Prelimitary bit success"
+          fi
+
+      - name: Set final commit status
+        uses: myrotvorets/set-commit-status-action@master
+        if: "${{ inputs.github_token != '' && inputs.sha != '' }}"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          sha: ${{ github.event.deployment.sha }}
+          context: ${{ github.event.deployment_status.environment_url }}
+          description: Deployment to ${{ github.event.deployment_status.environment_url }} ${{ job.status }}
