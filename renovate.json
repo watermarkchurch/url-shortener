@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "rangeStrategy": "update-lockfile",
+  "automerge": false,
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": [
+        "rack"
+      ],
+      "groupName": "rack",
+      "enabled": true
+    },
+    {
+      "matchPackageNames": [
+        "puma"
+      ],
+      "enabled": true
+    },
+    {
+      "matchPackageNames": [
+        "ruby"
+      ],
+      "enabled": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "pinDigests": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)\\.circleci/config\\.ya?ml$"],
+      "matchStrings": [
+        "image\\:\\s*cimg\\/(?<depName>.+)\\:(?<currentValue>[^-]+)"
+      ],
+      "datasourceTemplate": "{{{depName}}}-version"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)\\.gitpod\\.Dockerfile$"],
+      "matchStrings": [
+        "_ruby_version=(ruby-)?(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "ruby",
+      "datasourceTemplate": "ruby-version"
+    }
+  ]
+}
