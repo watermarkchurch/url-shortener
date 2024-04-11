@@ -5,7 +5,14 @@ https?://www.watermarkfw.org/* https://www.watermarkfortworth.org/:splat 302
 https?://redirect.churchleadersconference.com/clc-app-link/* clc://clc/app-link/:splat 302
 https?://redirect.churchleadersconference.com/* https://www.watermarkresources.com/conferences/clc?utm_source=churchleadersconference.com 302
 
-https?://marriagehelp.org/* https://www.reengage.org/legacy/:splat 301
+https?://marriagehelp.org/* https://www.marriagehelp.org/:splat 301
+
+# These URLs are printed in reengage books.  Resources wants them updated: https://app.shortcut.com/watermark/story/969/remapped-redirects-don-t-redirect
+https?://www.marriagehelp.org/truth https://www.reengage.org/resources?query=love&utm_source=marriagehelp.org 301
+https?://www.marriagehelp.org/conflict https://www.reengage.org/resources?query=reconciliation&utm_source=marriagehelp.org 301
+https?://www.marriagehelp.org/understand https://www.reengage.org/resources?query=emotional%20intimacy&utm_source=marriagehelp.org 301
+https?://www.marriagehelp.org/completion https://www.reengage.org/resources?query=spiritual%20intimacy&utm_source=marriagehelp.org 301
+https?://www.marriagehelp.org/diligence https://www.reengage.org/resources?query=invest&utm_source=marriagehelp.org 301
 https?://www.marriagehelp.org/* https://www.reengage.org/legacy/:splat 301
 
 https?://legacy.watermark.org/* https://www.watermark.org/:splat 301
