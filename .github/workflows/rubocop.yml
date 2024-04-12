@@ -1,0 +1,30 @@
+name: rubocop
+run-name: Upgrade Rubocop & fix a TODO
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 18 * * 4' # 12:30 PM on Thursday
+jobs:
+  rubocop_challenger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - run: |
+          if curl -s -H "Authorization: token $GITHUB_ACCESS_TOKEN" 'https://api.github.com/repos/watermarkchurch/url-shortener/pulls' | grep 'rubocop challenge'; then
+            echo "rubocop challenge branch already exists"
+          else
+            # https://github.com/ryz310/pr_comet/issues/71
+            git config remote.origin.url "git@github.com:${GITHUB_REPOSITORY}.git"
+
+            gem install rubocop_challenger
+            rubocop_challenger go \
+              --base-branch "master" \
+              --mode random \
+              --email "dev@watermark.org" --name "Watermark Dev"
+          fi
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}

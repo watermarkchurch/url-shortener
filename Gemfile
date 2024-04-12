@@ -14,8 +14,9 @@ group :development do
   gem 'guard-rubocop', '~> 1.5'
   gem 'rackup'
   gem 'rake'
-  gem 'rubocop', '~> 1.36'
-  gem 'rubocop-performance', '~> 1.15'
+  gem 'rubocop', '>= 1.46', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rspec', require: false
   gem 'typhoeus'
 end
 
