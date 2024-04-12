@@ -15,7 +15,8 @@ RSpec.describe('config/redirects') do
     'https://www.wmfw.org/test' => ['https://www.watermarkfortworth.org/test', 302],
     'http://www.watermarkfw.org/abc/123.jpg' => ['https://www.watermarkfortworth.org/abc/123.jpg', 302],
 
-    'https://marriagehelp.org/test/abc/123.jpg' => 'https://www.reengage.org/legacy/test/abc/123.jpg',
+    'https://marriagehelp.org/test/abc/123.jpg' => 'https://www.marriagehelp.org/test/abc/123.jpg',
+    'https://www.marriagehelp.org/truth' => 'https://www.reengage.org/resources?query=love&utm_source=marriagehelp.org',
     'https://www.marriagehelp.org' => 'https://www.reengage.org/legacy',
 
     'https://legacy.watermark.org/123.jpg?a=1' => 'https://www.watermark.org/123.jpg?a=1',
