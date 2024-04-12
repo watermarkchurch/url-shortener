@@ -25,12 +25,12 @@ jobs:
         run: |
           set -ex
 
-          check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
+          check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: www.marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
           if [[ "$check" != "200" ]]; then
             # Might just be taking a minute to get ready, even after it sends the webhook that the deployment completed.  Wait 30 secs before running the test.
             echo "$check $url - sleep 30 seconds before trying again"
             sleep 30
-            check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
+            check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: www.marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
           fi
 
           if [[ "$check" != "200" ]]; then
