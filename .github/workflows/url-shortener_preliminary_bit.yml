@@ -23,7 +23,7 @@ jobs:
       - name: Run Preliminary Bit Action
         shell: bash
         run: |
-          sleep 30
+          set -ex
 
           check=$(curl -s -o /dev/null -LI -XGET --write-out "%{response_code}" -H "X-Test-Host: marriagehelp.org" "${{ github.event.deployment_status.environment_url }}")
           if [[ "$check" != "200" ]]; then
