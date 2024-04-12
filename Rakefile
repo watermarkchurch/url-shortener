@@ -43,7 +43,7 @@ task :verify, [:url, :file] do |_t, args|
         headers['X-TEST-HOST'] = host
       end
 
-      request = Typhoeus::Request.new(from_uri, headers:)
+      request = Typhoeus::Request.new(from_uri, headers: headers)
       request.on_complete do |response|
         warn "GET #{headers} #{from_uri} => #{response.headers['Location']} #{response.code}"
         f.puts "#{from} #{response.headers['Location']} #{response.code}"
