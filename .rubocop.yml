@@ -164,6 +164,9 @@ RSpec/NamedSubject:
 # We prefer "to_not" as a readability preference
 RSpec/NotToNot:
   EnforcedStyle: to_not
+  
+RSpecRails:
+  Enabled: false
 
 Style/Alias:
   Enabled: true
