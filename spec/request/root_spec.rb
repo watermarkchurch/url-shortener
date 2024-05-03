@@ -13,6 +13,6 @@ RSpec.describe do
   it 'gets root' do
     get '/'
 
-    expect(last_response.status).to eq(200)
+    expect(last_response).to have_http_status(:ok)
   end
 end

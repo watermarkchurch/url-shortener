@@ -29,14 +29,6 @@ RSpec/MissingExampleGroupArgument:
   Exclude:
     - 'spec/request/root_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ResponseMethods.
-# ResponseMethods: response, last_response
-RSpecRails/HaveHttpStatus:
-  Exclude:
-    - 'spec/request/root_spec.rb'
-    - 'spec/request/test_host_spec.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

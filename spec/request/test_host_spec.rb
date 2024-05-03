@@ -15,7 +15,7 @@ RSpec.describe('config/initializers/redirect_router') do
     get '/blog'
 
     # should match theporchdallas.com -> theporch.live redirect
-    expect(last_response.status).to eq(301)
+    expect(last_response).to have_http_status(:moved_permanently)
     expect(last_response.headers['Location']).to eq('https://www.theporch.live/legacy/blog')
   end
 end
