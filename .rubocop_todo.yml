@@ -45,14 +45,6 @@ Style/RedundantCurrentDirectoryInPath:
     - 'lib/wcc/url_shortener.rb'
     - 'lib/wcc/url_shortener/application.rb'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArguments:
-  Exclude:
-    - 'lib/wcc/url_shortener/application.rb'
-    - 'lib/wcc/url_shortener/middleware/redirect_router.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).

@@ -25,7 +25,7 @@ class WCC::UrlShortener::Application
         Rack::ConditionalGet,
         Rack::ETag,
         [Rack::Static, { cascade: true, urls: [''], root: 'public', index: 'index.html' }],
-      ],
+      ]
     )
   end
 
