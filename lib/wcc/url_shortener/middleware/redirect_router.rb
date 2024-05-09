@@ -33,7 +33,7 @@ class WCC::UrlShortener::Middleware::RedirectRouter
       Route.new(
         WCC::UrlShortener::Util.path_to_regexp(from),
         to,
-        status || 301,
+        status || 301
       )
     end
   end
