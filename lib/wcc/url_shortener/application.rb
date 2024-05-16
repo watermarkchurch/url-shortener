@@ -8,8 +8,8 @@ require 'rack/conditional_get'
 require 'rack/etag'
 require 'rack/deflater'
 
-require_relative './util'
-require_relative './middleware'
+require_relative 'util'
+require_relative 'middleware'
 
 class WCC::UrlShortener::Application
   def root

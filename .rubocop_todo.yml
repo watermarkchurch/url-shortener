@@ -37,13 +37,6 @@ Style/ModuleFunction:
   Exclude:
     - 'lib/wcc/url_shortener/util.rb'
 
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantCurrentDirectoryInPath:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/wcc/url_shortener.rb'
-    - 'lib/wcc/url_shortener/application.rb'
 
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
