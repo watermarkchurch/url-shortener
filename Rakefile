@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(File.expand_path(File.join(__dir__, 'lib'))) unless $LOAD_PAT
 
 desc 'prints the classes in the final Rack application'
 task :middleware do
-  require_relative './lib/wcc/url_shortener'
+  require_relative 'lib/wcc/url_shortener'
 
   app = WCC::UrlShortener.application.to_app
   klasses = [app.class]
