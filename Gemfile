@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.0'
+ruby '3.3.1'
 
 gem 'bugsnag', '~> 6.24'
 gem 'puma', '~> 6.0'
