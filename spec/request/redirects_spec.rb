@@ -41,7 +41,7 @@ RSpec.describe('config/redirects') do
     'https://thechurchleadershipconference.com' => 'https://www.watermarkresources.com/conferences/clc?utm_source=thechurchleadershipconference.com',
     'https://redirect.churchleadersconference.com/blargh?test=1' => [
       'https://www.watermarkresources.com/conferences/clc?test=1&utm_source=churchleadersconference.com', 302
-    ],
+    ]
   }.each do |from, to|
     url, status = Array(to)
 
