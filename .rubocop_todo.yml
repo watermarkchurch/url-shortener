@@ -44,11 +44,3 @@ Style/ModuleFunction:
 Style/TrailingCommaInArrayLiteral:
   Exclude:
     - 'lib/wcc/url_shortener/application.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'spec/request/redirects_spec.rb'
