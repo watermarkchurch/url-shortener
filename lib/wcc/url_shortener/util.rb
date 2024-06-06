@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module WCC::UrlShortener::Util
-  extend self
+  module_function
 
   def path_to_regexp(path)
     path = path.gsub(/\/?\*/, '(?<splat>[^\?]*)')

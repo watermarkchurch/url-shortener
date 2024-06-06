@@ -28,11 +28,3 @@ RSpec/DescribeClass:
 RSpec/MissingExampleGroupArgument:
   Exclude:
     - 'spec/request/root_spec.rb'
-
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, Autocorrect.
-# SupportedStyles: module_function, extend_self, forbidden
-Style/ModuleFunction:
-  Exclude:
-    - 'lib/wcc/url_shortener/util.rb'
